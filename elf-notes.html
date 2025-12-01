@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Merry-Water's Magical Messages</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+:root {
+    --primary: #C0392B; 
+    --secondary: #006400;
+    --accent: #F4F4F9;
+    --text: #333;
+    --shadow: 0 4px 20px rgba(0,0,0,0.1);
+    --radius: 1.5rem;
+}
+
+/* --- Reset & Base --- */
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+    font-family:'Poppins',sans-serif;
+    color: var(--text);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    overflow-x:hidden;
+    background: linear-gradient(to bottom, #E6F7FF 0%, #F4F4F9 100%);
+}
+
+/* --- Snowflakes --- */
+.snowflake {
+    position: fixed;
+    top: -10px;
+    font-size: 1rem;
+    color: white;
+    z-index: 0;
+    user-select: none;
+    pointer-events: none;
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity:1; }
+    100% { transform: translateY(120vh) rotate(360deg); opacity:0; }
+}
+
+/* --- Hanging Ornaments --- */
+.ornament {
+    position: absolute;
+    width: 25px;
+    height: 35px;
+    border-radius: 50%;
+    background: red;
+    border: 2px solid gold;
+    top: -50px;
+    animation: swing 3s ease-in-out infinite alternate;
+}
+.ornament.yellow { background: #FFD700; }
+.ornament.green { background: #00A86B; }
+@keyframes swing{
+    0% { transform: translateY(0) rotate(-10deg);}
+    100% { transform: translateY(10px) rotate(10deg);}
+}
+
+/* --- Button --- */
+.button {
+    margin-top:2rem;
+    padding:1rem 2rem;
+    font-size:1.3rem;
+    font-weight:700;
+    border:none;
+    border-radius:1.5rem;
+    background: linear-gradient(to right, var(--secondary), #228B22);
+    color:white;
+    cursor:pointer;
+    transition: all 0.3s ease;
+    box-shadow:0 5px #004D00;
+}
+.button:hover{
+    transform: translateY(-3px);
+    box-shadow:0 8px #004D00;
+}
+.button:active{
+    transform: translateY(1px);
+    box-shadow:0 3px #004D00;
+}
+
+/* --- Landing Page --- */
+#landing-page{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:2rem;
+    max-width:800px;
+    border-radius:2rem;
+    background: #fff;
+    box-shadow:0 10px 40px rgba(0,0,0,0.15);
+    position:relative;
+    overflow:hidden;
+    animation: fadeIn 1s forwards;
+}
+#landing-page h1{
+    font-family:'Playfair Display', serif;
+    font-size:3rem;
+    color:var(--primary);
+    margin-bottom:1rem;
+    letter-spacing:1px;
+}
+#landing-page p{
+    font-size:1.25rem;
+    color: var(--secondary);
+    line-height:1.8;
+    margin-bottom:2rem;
+}
+
+/* --- Riddles Page --- */
+#riddles-page{
+    display:none;
+    width:100%;
+    max-width:900px;
+    margin-top:2rem;
+}
+
+/* --- Container --- */
+.container{
+    background:white;
+    border-radius:1.5rem;
+    padding:2rem;
+    box-shadow:0 8px 30px rgba(0,0,0,0.1);
+    position:relative;
+    overflow:hidden;
+}
+
+/* --- Riddle Cards --- */
+.riddle-set{
+    display:flex;
+    flex-direction:column;
+    background: var(--accent);
+    padding:1.5rem;
+    border-radius:1.5rem;
+    box-shadow:0 4px 20px rgba(0,0,0,0.1);
+    margin-bottom:1rem;
+}
+.riddle-set label{
+    font-weight:700;
+    margin-bottom:0.5rem;
+    color: var(--secondary);
+}
+.riddle-input{
+    padding:0.8rem 1rem;
+    font-size:1rem;
+    border:2px solid var(--secondary);
+    border-radius:1.5rem;
+    outline:none;
+    transition: all 0.3s ease;
+}
+.riddle-input:focus{
+    border-color: var(--primary);
+    box-shadow:0 0 10px rgba(192,57,43,0.3);
+}
+
+/* --- Secret Letter --- */
+#secret-content{
+    display:none;
+    margin-top:2rem;
+    perspective:1200px;
+}
+.letter-wrapper{
+    width:100%;
+    max-width:800px;
+    margin:0 auto;
+    background:#FFF8E7;
+    border-radius:1.5rem;
+    border: 5px solid transparent;
+    position:relative;
+    transform-origin: top center;
+    transform: rotateX(-90deg);
+    animation: openLetter 1s forwards;
+    box-shadow:0 8px 30px rgba(0,0,0,0.15);
+    border-image: repeating-linear-gradient(45deg, white 0 10px, var(--primary) 10px 20px) 10;
+}
+.letter-wrapper::before{
+    content:"";
+    position:absolute;
+    top:0; left:0; right:0; bottom:0;
+    border-radius:1.5rem;
+    pointer-events:none;
+    box-shadow: 0 0 20px rgba(255,255,255,0.3), inset 0 0 30px rgba(255,255,255,0.2);
+}
+@keyframes openLetter{
+    from{ transform: rotateX(-90deg); opacity:0;}
+    to{ transform: rotateX(0deg); opacity:1;}
+}
+#note-content{
+    background:#FFF8E7;
+    padding:2rem;
+    border-radius:1.2rem;
+    box-shadow: inset 0 0 12px rgba(0,0,0,0.05);
+    border:1px dashed var(--primary);
+    line-height:1.8;
+}
+#note-content p{
+    margin-bottom:1.4rem;
+}
+.letter-content .signature{
+    font-family:'Great Vibes', cursive;
+    font-size:2rem;
+    color: var(--primary);
+    text-align:right;
+    margin-top:1rem;
+}
+
+/* --- Santa Stamp --- */
+.santa-stamp{
+    position:absolute;
+    top:10px;
+    right:10px;
+    width:100px;
+    height:100px;
+    background: url('https://i.imgur.com/0c7Qz8t.png') no-repeat center/contain;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn{
+    from {opacity:0; transform: translateY(30px);}
+    to {opacity:1; transform: translateY(0);}
+}
+</style>
+</head>
+<body>
+
+<!-- Landing Page -->
+<div id="landing-page">
+    <h1>🎄✨ A Magical Note from Merry-Water ✨🎄</h1>
+    <p>
+        Hello, wonderful Aria and Luca! This year, my messages will flutter through the stars
+        and land here, on this very magical web page! 🌟✨<br><br>
+        Each day, a new riddle will appear, waiting for your clever minds to unlock it. Solve 
+        the riddles, reveal my secret letters, and discover the sparkle and wonder I’ve sprinkled 
+        just for you. ❄🎁<br><br>
+        Are you ready to unwrap the magic, giggle with elves, and follow the twinkling trail 
+        straight to the North Pole? 🎅🎄
+    </p>
+    <button class="button" onclick="startRiddles()">Let’s Go! 🪄</button>
+</div>
+
+<!-- Riddles Page -->
+<div id="riddles-page">
+    <div class="container">
+        <p class="welcome-message">To unlock the magic and read my note, solve my three Christmas riddles!</p>
+        <div id="riddle-area">
+            <div class="riddle-set">
+                <label for="answer1">Riddle 1: I have a round middle and pointy ends. I wear a bright coat and have ribbons for friends. What am I?</label>
+                <input type="text" id="answer1" class="riddle-input" placeholder="Your first answer">
+            </div>
+            <div class="riddle-set">
+                <label for="answer2">Riddle 2: I twinkle on the tallest trees, but I make no sound in the winter breeze. What am I?</label>
+                <input type="text" id="answer2" class="riddle-input" placeholder="Your second answer">
+            </div>
+            <div class="riddle-set">
+                <label for="answer3">Riddle 3: I fly without wings and bring cold air. I cover the rooftops and leave magic everywhere. What am I?</label>
+                <input type="text" id="answer3" class="riddle-input" placeholder="Your final answer">
+            </div>
+            <button class="button" id="check-button" onclick="checkRiddles()">Check the Magic!</button>
+            <p id="feedback-message">Hmm... One or more answers are wrong! Try again.</p>
+        </div>
+
+        <div id="secret-content">
+            <div class="letter-wrapper">
+                <div class="santa-stamp"></div>
+                <div id="note-content" class="letter-content">
+                    <p style="text-align:center; font-family:'Playfair Display', serif; font-size:1.8rem; color:var(--primary);">DEAR ARIA AND LUCA,</p>
+                    <p>Twinkle-tap, twinkle-tap… do you hear that tiny sound?</p>
+                    <p>It’s me, Merry-Water, fluttering into your beautiful new house, finally back on the ground!</p>
+                    <p>Oh my gumdrops, it’s even cozier than I imagined. I can already feel the Christmas magic dancing through the halls!</p>
+                    <p>Santa told me the most wonderful news…</p>
+                    <p>You each have your very own special rooms!</p>
+                    <p>Rooms where imaginations grow, dreams swirl, and all kinds of elf-approved adventures begin.</p>
+                    <p>Aria, I simply cannot wait to hear about all the books you’ve been reading. Every story you open sends a tiny sparkle into the sky — I’ve seen them all the way from the North Pole!</p>
+                    <p>Luca, I’m so excited to peek in and see all the games you’ve been playing. Santa says you’ve been having tons of fun and learning new things — elves love a clever kid!</p>
+                    <p>And oh! I heard you One more sprinkle of magic… now have a brand-new baby girl cousin! A teeny-tiny human filled with starlight and sweetness — I can’t wait to meet her someday.</p>
+                    <p>Santa also shared a very special secret with me: You both have been wonderfully, joyfully GOOD this year. So good, in fact, that my hat jingled with happiness when he told me!</p>
+                    <p>I’ll be watching with my sparkly elf eyes, ready to report all your kindness, giggles, and good deeds back to Santa each night… (and maybe play a few silly tricks on Mom and Dad while I’m at it — shhh!).</p>
+                    <p>I’m so thrilled to spend this magical season with you.</p>
+                    <p style="text-align:right; font-family:'Great Vibes', cursive; font-size:2rem; color:var(--primary);">YOURS TRULY,</p>
+                    <p class="signature">Merry-Water</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Snowflakes
+for(let i=0;i<50;i++){
+    const snow=document.createElement('div');
+    snow.classList.add('snowflake');
+    snow.style.left=Math.random()*100+'vw';
+    snow.style.fontSize=(Math.random()*10+10)+'px';
+    snow.style.animationDuration=(Math.random()*5+5)+'s';
+    snow.style.opacity=Math.random();
+    snow.textContent='❄';
+    document.body.appendChild(snow);
+}
+
+// Ornaments
+function createOrnaments(){
+    for(let i=0;i<8;i++){
+        const o=document.createElement('div');
+        o.classList.add('ornament');
+        if(i%3===0)o.classList.add('yellow');
+        else if(i%3===1)o.classList.add('green');
+        o.style.left=Math.random()*90+'vw';
+        o.style.top=Math.random()*20+'vh';
+        o.style.animationDuration=(2+Math.random()*2)+'s';
+        document.body.appendChild(o);
+    }
+}
+createOrnaments();
+
+// Landing -> Riddles
+function startRiddles(){
+    document.getElementById('landing-page').style.display='none';
+    document.getElementById('riddles-page').style.display='block';
+    document.getElementById('answer1').focus();
+}
+
+// Riddle Logic
+const ANSWER_1="present", ANSWER_2="lights", ANSWER_3="snow";
+const a1=document.getElementById('answer1'), a2=document.getElementById('answer2'), a3=document.getElementById('answer3');
+const secret=document.getElementById('secret-content'), riddles=document.getElementById('riddle-area'), feedback=document.getElementById('feedback-message');
+
+function checkRiddles(){
+    const val1=a1.value.toLowerCase().trim(), val2=a2.value.toLowerCase().trim(), val3=a3.value.toLowerCase().trim();
+    if(val1===ANSWER_1 && val2===ANSWER_2 && val3===ANSWER_3){
+        riddles.style.display='none'; 
+        secret.style.display='block'; 
+        feedback.style.display='none';
+    } else {
+        feedback.style.display='block';
+        if(val1!==ANSWER_1)a1.value='';
+        if(val2!==ANSWER_2)a2.value='';
+        if(val3!==ANSWER_3)a3.value='';
+    }
+}
+[a1,a2,a3].forEach(input=>input.addEventListener('keydown',e=>{if(e.key==='Enter')checkRiddles();}));
+</script>
+</body>
+</html>
